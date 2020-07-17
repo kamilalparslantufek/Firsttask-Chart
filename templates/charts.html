@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% block jquery %}
+<script>
+    var endpoint = "api/data/chart"
+    var values = []
+    var tarih = []
+    var tvals = []
+$.ajax({
+    method: "GET", 
+    url : endpoint,
+    success: function(data){
+        console.log(data)
+        values = Object.values(data.Values)
+        tarih = Object.values(data.Tarih)
+        tvals = data.tvals[0]
+        console.log(tvals)
+        document.getElementById("tval-list").appendChild(makeUL(Object.keys(tvals), Object.values(tvals)))
+        // function for 
+        am4core.ready(function() {
+        /*
+        [summary]   Function for making chart. Uses amCharts4
+        */
+         
+            // Themes begin
+            am4core.useTheme(am4themes_dark);
+            am4core.useTheme(am4themes_animated);
+            // Themes end
+            //making chartdata
+            var chartdata = []
+            for(var i = 0; i < values.length; i++){
+                chartdata.push({yearweek: tarih[i], value: values[i]})
+            }
+
+            var chart = am4core.create("chart1", am4charts.XYChart);
+            chart.data = chartdata;
+            chart.numberFormatter.numberFormat = "#.##"; // -> not working, a problem on API side probably
+            // Create axes, add data to X axis
+            var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+            categoryAxis.renderer.minGridDistance = 100;
+            categoryAxis.dataFields.category = "yearweek";
+            // Add data to Y axis and format number ?
+            var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+            valueAxis.maxPrecision = 1;
+            //valueAxis.dataFields.values = "value";
+            
+            // Create series
+            var series = chart.series.push(new am4charts.LineSeries());
+            series.dataFields.valueY = "value";
+            series.dataFields.categoryX = "yearweek";
+            series.tooltipText = "{yearweek}: {value}%";
+            series.tooltip.pointerOrientation = "horizontal";
+            
+            chart.cursor = new am4charts.XYCursor();
+
+            chart.scrollbarX = new am4core.Scrollbar(); 
+            
+              
+            
+        }); // end am4core.ready()
+    
+        /*taskchart = chartmaker()
+        updatechart(taskchart)*/   
+        
+        //listing transform values for each year.
+        listContainer = document.getElementById("tval-list");
+        listElement = document.createElement("ul");
+
+        for(var i = 0; i < Object.keys(tvals).length; i++){
+            var listItem = document.createElement('li');
+            listItem.innerHTML = Object.keys(tvals)[i] + ":" + Object.values(tvals)[i];
+            listElement.appendChild(listItem);
+        }
+    },
+    error: function(error_data){
+        console.log("error")
+        console.log(error_data)
+    }
+})
+
+function makeUL(array1,array2) {
+    /*
+    [summary]
+    [inputs] array1 [type: array]  array of years
+             array2 [type: array]  array of transformation values 
+    [output] list - [type: array]  array of list items
+    */
+    var list = document.createElement('ul');
+
+    for (var i = 0; i < array1.length; i++) {
+        var item = document.createElement('li');
+        item.innerHTML = array1[i] + " : " + array2[i] + "%";
+        list.appendChild(item);
+    }
+    return list;
+}
+
+/*          Chart made with Chart.JS, i didnt like its readability so i used amCharts.
+function chartmaker(){
+    var ctx = document.getElementById('chart1').getContext('2d');
+    var taskchart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: yearweek,
+            datasets:[{
+                label: "Percentage",
+                data: values,
+                borderColor: '#D4213D',
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    })
+    return taskchart;
+}
+
+function updatechart(taskchart){
+    for (i = 0; i < taskchart.data.datasets[0].data.length; i++) {
+        if (taskchart.data.labels[i] == "2016-1") {
+            taskchart.data.datasets[0].borderColor ="#90cd8a";
+        } else if(taskchart.data.labels[i] == "2017-1"){
+            taskchart.data.datasets[0].borderColor ="#90cd8a";
+        }
+    }
+    
+    taskchart.update();
+    
+}*/
+
+</script>
+{% endblock %}
+
+
+{% block content %}
+<div id="chart1" class="chart" style="height: 600px;"></div>
+
+
+    <p class="text-light text-justify mx-5">
+        Data taken from <a class="text-light" href="https://evds2.tcmb.gov.tr/">Central Bank of the Republic of Turkey.</a>
+        <br>
+        Every year's values have transformed to start at 0%. (Every year's values have substracted from that year's values.)
+    </p>
+    <ul id="tval-list" class="mx-2">
+        List of transformation values for each year;
+    </ul>
+
+
+{{tvals}}
+{% endblock content %}

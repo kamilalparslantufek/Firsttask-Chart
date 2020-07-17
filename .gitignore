@@ -1,0 +1,7 @@
+
+__pycache__/chartdata.cpython-37.pyc
+*.pyc
+data/__pycache__/chartdata.cpython-37.pyc
+*.sqlite3
+secret.txt
+data/api.txt
