@@ -1,12 +1,28 @@
 # Firsttask-Chart
 A chart made for Total Debit and Credit Card Expenditure, using python Django.
+<ul>
 # Made using;
- *Python;
-    **Django,
-    **Django rest framework,
-    **EVDS,
-    **pandas,
-    **numpy,
+ <li>*Python;
+   <ul>
+      <li>
+         Django,
+      </li>
+      <li>
+         Django rest framework,
+      </li>
+      <li>
+         *EVDS,
+      </li>
+      <li>
+         pandas,
+      </li>
+      <li
+          numpy
+      </li>
+    </ul></li>
+</ul>
+
+    
  *amCharts4
 WARNING: To run this you need an api key from https://evds2.tcmb.gov.tr and a secret key for django.
 <br/>
