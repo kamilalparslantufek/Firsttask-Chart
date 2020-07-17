@@ -11,7 +11,7 @@ A chart made for Total Debit and Credit Card Expenditure, using python Django.
          Django rest framework
       </li>
       <li>
-         *EVDS
+         EVDS
       </li>
       <li>
          pandas
