@@ -1,25 +1,32 @@
 # Firsttask-Chart
 A chart made for Total Debit and Credit Card Expenditure, using python Django.
 <ul>
-# Made using;
- <li>*Python;
+ Made using;
+ <li>Python libraries;
    <ul>
       <li>
-         Django,
+         Django
       </li>
       <li>
-         Django rest framework,
+         Django rest framework
       </li>
       <li>
-         *EVDS,
+         *EVDS
       </li>
       <li>
-         pandas,
+         pandas
       </li>
       <li
           numpy
       </li>
     </ul></li>
+ <li>
+  Front-end libraries;
+  <ul>
+   <li>amCharts4, data visualization library for js.</li>
+   <li>js,jquery,bootstrap,css,html, classic stuff for front-end.</li>
+</ul>
+ </li>
 </ul>
 
     
