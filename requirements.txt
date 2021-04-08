@@ -1,5 +1,5 @@
 pip==20.0.2
-Django==3.0.7
+Django==3.0.14
 djangorestframework==3.11.0
 pandas==1.0.1
 numpy==1.18.1
